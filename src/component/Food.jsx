@@ -1,0 +1,134 @@
+import React, { useEffect, useState } from 'react';
+import Header from './Header';
+import Subscription from './Subscription';
+import Footer from './Footer';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import '../css/Food.css';
+import { useLocation } from 'react-router-dom';
+
+function Food({ onLoginClick, onConsultClick }) {
+  const location = useLocation();
+  const foods = location.state?.foods || [];
+  const [categories, setCategories] = useState([]);
+  const [filteredFoods, setFilteredFoods] = useState(foods);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // Fetch categories from the API
+  useEffect(() => {
+    fetch('http://localhost:8000/api/categories')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Fetched categories:', data); // Debugging API response
+
+        // Map categories to the format for the select dropdown
+        const categoryOptions = data.map((category) => ({
+          value: category.id,
+          label: category.name,
+        }));
+        setCategories(categoryOptions);
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+        alert('Failed to fetch categories. Please try again later.');
+      });
+  }, []);
+
+  // Filter foods based on the selected category
+  const handleCategoryChange = (e) => {
+    e.preventDefault(); // Prevent page reload
+
+    const selectedOption = categories.find(
+      (category) => category.value === parseInt(e.target.value)
+    );
+    setSelectedCategory(selectedOption);
+
+    if (!selectedOption) {
+      setFilteredFoods(foods); // Show all foods when no category is selected
+    } else {
+      setFilteredFoods(foods.filter((food) => food.category_id === selectedOption.value));
+    }
+  };
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      offset: 100,
+    });
+
+    // Re-initialize AOS when filteredFoods changes
+    AOS.refresh(); // This is the key to re-trigger AOS animations on re-render
+  }, [filteredFoods]);
+
+  return (
+    <div>
+      <Header onLoginClick={onLoginClick} />
+      <section className="food-list">
+        <div className="header-container">
+          <h2 className="title">Available Foods</h2>
+          <div className="category-filter" data-aos="fade-up">
+              <select
+                value={selectedCategory ? selectedCategory.value : ''}
+                onChange={handleCategoryChange}
+                className="category-select"
+              >
+                <option value="">Select Category</option>
+                {categories.map((category) => (
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
+                ))}
+              </select>
+            
+          </div>
+        </div>
+        <div className="food-table-container" data-aos="fade-up">
+          <table className="food-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Rating</th>
+                <th>Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredFoods.map((food) => (
+                <tr key={food.id}>
+                  <td>
+                    <img
+                      src={food.image.startsWith('http') ? food.image : `/${food.image.replace('public/', '')}`}
+                      alt={food.name}
+                      className="food-image"
+                    />
+                  </td>
+                  <td>{food.name}</td>
+                  <td>{food.description || 'No description available'}</td>
+                  <td>{food.rating}</td>
+                  <td>${food.price}</td>
+                  <td>
+                    <button className="food-button">Order</button>
+                    <button className="food-button" onClick={() => onConsultClick(food)}>
+                      Consult
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <Subscription onLoginClick={onLoginClick} />
+      <Footer />
+    </div>
+  );
+}
+
+export default Food;
