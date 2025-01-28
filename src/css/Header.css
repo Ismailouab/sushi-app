@@ -73,7 +73,7 @@
     gap: 20px;
     position: relative;
   }
-  .header__login {
+  .header__login,.header__logout {
     font-weight: 600;
     font-family: var(--plus-jakarta-sans);
     color: #fff;
@@ -93,6 +93,13 @@
     background-color: #fff;
     color: var(--primary-color);
     opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  .header__logout:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+    opacity: 0.9;
+    transform: translateY(-2px);
   }
 
  

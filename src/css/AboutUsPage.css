@@ -1,0 +1,97 @@
+/* About Us Title Section */
+.about-us-title-section {
+    text-align: center;
+    margin: 40px 0;
+    padding: 20px;
+  }
+  .about-us-title {
+    font-size: 48px;
+    font-weight: 700;
+    font-family: var(--playfair-display);
+    color: var(--secondary-color);
+  }
+  
+  /* Mission Section */
+  .mission-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: var(--color-creamson);
+    border-top: 3px solid var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+  }
+  .decorative-line {
+    width: 50px;
+    border: 2px solid var(--secondary-color);
+    margin: 0 auto 20px auto;
+  }
+  .section-title {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: var(--playfair-display);
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+  }
+  .mission-text {
+    font-size: 18px;
+    font-family: var(--plus-jakarta-sans);
+    line-height: 1.8;
+    color: var(--secondary-color);
+    margin: 10px 0;
+  }
+  
+  /* Story Section */
+  .story-section {
+    padding: 40px 20px;
+  }
+  .story-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    gap: 20px;
+  }
+  .story-block.reverse {
+    flex-direction: row-reverse;
+  }
+  .story-text {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+  }
+  .story-text h3 {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: var(--playfair-display);
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+  }
+  .story-text p {
+    font-size: 16px;
+    font-family: var(--plus-jakarta-sans);
+    line-height: 1.6;
+    color: var(--secondary-color);
+  }
+  .story-image {
+    flex: 1;
+    text-align: center;
+  }
+  .story-image img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .story-block {
+      flex-direction: column;
+      text-align: center;
+    }
+    .story-block.reverse {
+      flex-direction: column;
+    }
+    .story-text {
+      padding: 10px;
+    }
+  }
+  

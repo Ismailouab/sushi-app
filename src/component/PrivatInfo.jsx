@@ -1,16 +1,13 @@
 import React from 'react'
-import Footer from './Footer'
 import Header from './Header'
 import { useAuth } from '../context/AuthContext';
-
-
-function Order() {
-  const { user } = useAuth();
+import Footer from './Footer';
+function PrivatInfo() {
+    const { user } = useAuth();
   return (
     <div>
-      
-      <Header/>
-      {user && (
+        <Header/>
+        {user && (
         <div className="admin-dashboard__user-info">
           <h2 className="name">Hello, {user.name}</h2>
         </div>
@@ -20,4 +17,4 @@ function Order() {
   )
 }
 
-export default Order
+export default PrivatInfo

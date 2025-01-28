@@ -89,6 +89,10 @@
     border-radius: 64px;
     cursor: pointer;
 }
+.popular-foods__button:hover{
+   transform: translateY(-2px);
+   opacity: 0.9;   
+}
 .link{
     display: flex;
     justify-content: center;

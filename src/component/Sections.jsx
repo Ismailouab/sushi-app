@@ -24,12 +24,12 @@ function Sections({ onLoginClick }) {
   return (
     <div>
       <Header onLoginClick={onLoginClick}/>
-      <Hero />
+      <Hero  onLoginClick={onLoginClick} />
       <AboutUs />
       <PopularFoods />
       <Trending /> 
       <Subscription  onLoginClick={onLoginClick}/>
-      <Footer />
+      <Footer  onLoginClick={onLoginClick}/>
     </div>
   )
 }

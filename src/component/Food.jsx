@@ -5,7 +5,8 @@ import Footer from './Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../css/Food.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function Food({ onLoginClick, onConsultClick }) {
   const location = useLocation();
@@ -13,7 +14,8 @@ function Food({ onLoginClick, onConsultClick }) {
   const [categories, setCategories] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState(foods);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const { user } = useAuth(); // Get user authentication state
+  const navigate = useNavigate(); // For navigation
   // Fetch categories from the API
   useEffect(() => {
     fetch('http://localhost:8000/api/categories')
@@ -64,13 +66,23 @@ function Food({ onLoginClick, onConsultClick }) {
     // Re-initialize AOS when filteredFoods changes
     AOS.refresh(); // This is the key to re-trigger AOS animations on re-render
   }, [filteredFoods]);
+  //for the order button
+  const handleOrderClick = (food) => {
+    if (user) {
+      // If the user is logged in, navigate to the Order page and pass the food info
+      navigate('/order', { state: { food } });
+    } else {
+      // If the user is not logged in, show the login modal
+      onLoginClick();
+    }
+  };
 
   return (
     <div>
       <Header onLoginClick={onLoginClick} />
       <section className="food-list">
         <div className="header-container">
-          <h2 className="title">Available Foods</h2>
+          <h2 className="title">Available Foods /入手可能な食品</h2>
           <div className="category-filter" data-aos="fade-up">
               <select
                 value={selectedCategory ? selectedCategory.value : ''}
@@ -88,7 +100,7 @@ function Food({ onLoginClick, onConsultClick }) {
           </div>
         </div>
         <div className="food-table-container" data-aos="fade-up">
-          <table className="food-table">
+          <table className="food-table" data-aos="zoom-in">
             <thead>
               <tr>
                 <th>Image</th>
@@ -114,7 +126,7 @@ function Food({ onLoginClick, onConsultClick }) {
                   <td>{food.rating}</td>
                   <td>${food.price}</td>
                   <td>
-                    <button className="food-button">Order</button>
+                    <button className="food-button" onClick={() => handleOrderClick(food)}>Order</button>
                     <button className="food-button" onClick={() => onConsultClick(food)}>
                       Consult
                     </button>

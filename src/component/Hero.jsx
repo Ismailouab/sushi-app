@@ -1,8 +1,21 @@
 import React from 'react'
 import '../css/Hero.css';
-import  {Link} from 'react-router-dom';
+import  {Link, useNavigate} from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-function Hero() {
+function Hero({ onLoginClick }) {
+    const { user } = useAuth();
+    const navigate = useNavigate();
+
+    const handleOrderClick = () => {
+        if (user) {
+          // If user is logged in, navigate to the Order page
+          navigate('/order');
+        } else {
+          // If user is not logged in, show the login modal
+          onLoginClick();
+        }
+      };
   return (
     <section className="hero">
         <div className="hero-image">
@@ -21,13 +34,23 @@ function Hero() {
 
         <div className="hero-content">
             <div className="hero-content-info" data-aos="fade-left">
+                {user && (
+                    
+                    <h2 className="name">Hello, <span>{user.name}</span></h2>
+                    
+                )}
                 <h1>Feel the taste of Japanese food</h1>
                 <p>
                 Feel the taste of the most popular Japanese food from anywhere and
                 anytime.
                 </p>
                 <div className="hero-content__buttons">
-                <Link to='/order'><button className="hero-content__order-button">Order Now </button></Link>
+                <button 
+                    className="hero-content__order-button"  
+                    onClick={handleOrderClick}// Use the handleOrderClick function
+                > 
+                    Order Now 
+                </button>
                 <button className="hero-content__play-button">
                     <img
                     src="./assets/play-circle.svg"

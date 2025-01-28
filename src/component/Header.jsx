@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import '../css/Header.css';
-import { Link, useLocation  } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; 
 import axios from 'axios';
 function Header({ onLoginClick }) {
     const location = useLocation();
     const [foods, setFoods] = useState([]);
+    const { user, logout } = useAuth();
+    
 
   // Fetch data from API
   useEffect(() => {
@@ -17,6 +20,14 @@ function Header({ onLoginClick }) {
         console.error('Error fetching food data:', error);
       });
   }, []);
+ 
+  const handleDashboardClick = (e) => {
+    if (!user) {
+      e.preventDefault();
+      onLoginClick();
+    }
+  };
+
   return (
     <>
         <header>
@@ -27,21 +38,41 @@ function Header({ onLoginClick }) {
                 </div>
 
                 <ul className="header__menu" data-aos="fade-down">
-                <li>
-                    <a href="#menu" className={location.hash === "#menu" ? "active" : ""}>Menu</a>
-                </li>
-                <li>
-                    <Link to="/food" className={location.pathname === "/food" ? "active" : ""} state={{ foods }}> Food </Link>
-                </li>
-                <li>
-                    <a href="#services" className={location.hash === "#services" ? "active" : ""} > Services</a>
-                </li>
-                <li>
-                    <a  href="#about-us" className={location.hash === "#about-us" ? "active" : ""} > About Us</a>
-                </li>
-                <li>
-                    <button className="header__login" onClick={onLoginClick}>Login</button>
-                </li>
+                  <li>
+                      <Link to="/food" className={location.pathname === "/food" ? "active" : ""} state={{ foods }}
+                       > Food </Link>
+                  </li>
+                  <li>
+                    <Link to={user ? (user.role === 'admin' ? '/admin/dashboard' : '/client/dashboard') : '#'}
+                    className={location.pathname === "/admin/dashboard" || location.pathname === "/client/dashboard" ? "active" : ""}
+                    onClick={handleDashboardClick}>
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/aboutus"
+                      className={location.pathname === "/aboutus" ? "active" : ""}
+                    >
+                      About Us
+                    </Link>
+                  </li>
+                  {/* If the user is logged in, show their name and logout button */}
+                      {user ? (
+                        <>
+                          <li>
+                            <Link to="/private"
+                              className={location.pathname === "/private" ? "active" : ""}
+                            >
+                              private
+                            </Link>
+                          </li>
+                          <button className="header__logout" onClick={logout}>Logout</button>
+                        </>
+                      ) : (
+                        <li>
+                          <button className="header__login" onClick={onLoginClick}>Login</button>
+                        </li>
+                      )}
                 </ul>
 
                 <ul className="header__menu-mobile" data-aos="fade-down">

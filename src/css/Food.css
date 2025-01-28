@@ -13,12 +13,12 @@
 
 /* Style the title */
 .title {
-  font-size: 40px;
+  font-size: 35px;
   font-family: var(--playfair-display);
   font-weight: 600;
   color: var(--secondary-color);
   text-align: left;
-  margin: 0;  /* Remove default margin */
+  margin: 10px;  /* Remove default margin */
 }
 /* Container for the Select dropdown */
 .category-filter select {
@@ -55,11 +55,26 @@
   font-size: 16px;
   color: var(--black-500);
 }
+.category-select:focus {
+  outline: none;  /* Removes the focus outline */
+  border: none;   /* Removes the default border */
+}
+.category-filter select:hover {
+  background-color: var(--color-white); /* Set background color to white */
+  color: var(--primary-color); /* Set text color to var(--primary-color) */
+  transform: translateY(-2px);
+}
 
-/* Hover effect for options */
+/* Option hover styling */
 .category-filter select option:hover {
-  background-color: var(--primary-color);
-  color: var(--color-white);
+  background-color: var(--primary-color); /* Set option hover background color */
+  color: var(--color-white); /* Set option text color */
+}
+
+/* Prevent the default blue background for selected option */
+.category-filter select option:checked {
+  background-color: var(--primary-color); /* Option background when selected */
+  color: var(--color-white); /* Option text color when selected */
 }
 
 

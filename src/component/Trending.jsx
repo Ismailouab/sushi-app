@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/Trending.css'; 
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 function Trending() {
+  const [foods, setFoods] = useState([]);
+
+  // Fetch data from API
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/foods')
+      .then((response) => {
+        console.log('API Response:', response.data); // Check this in the console
+        setFoods(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching food data:', error);
+      });
+  }, []);
   return (
     <section className="trending" id="food">
     <section className="trending-sushi">
@@ -31,7 +46,7 @@ function Trending() {
       </div>
     </section>
     <div className="trending__discover" data-aos="zoom-in">
-      <p>Discover</p>
+      <Link to='/food' state={{ foods }}><p>Discover</p></Link>
     </div>
     <section className="trending-drinks">
       <div className="trending__image flex-center">
