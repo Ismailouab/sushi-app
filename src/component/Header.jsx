@@ -3,11 +3,24 @@ import '../css/Header.css';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; 
 import axios from 'axios';
-function Header({ onLoginClick }) {
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+function Header({ onLoginClick,onShowInfoClick }) {
     const location = useLocation();
     const [foods, setFoods] = useState([]);
     const { user, logout } = useAuth();
-    
+    useEffect(()=>{
+      AOS.init({
+        duration: 1000,
+        offset: 100,
+      });
+      AOS.refresh({
+        duration: 1000,
+        offset: 100,
+      }); 
+  },[]);
+  
 
   // Fetch data from API
   useEffect(() => {
@@ -27,13 +40,26 @@ function Header({ onLoginClick }) {
       onLoginClick();
     }
   };
+  const handlePrivateClick = (e) => {
+    e.preventDefault(); // Prevent navigation
+    onShowInfoClick();  // Open the modal
+  };
+
 
   return (
     <>
         <header>
             <nav className="header__nav">
                 <div className="header__logo">
-                <Link to='/'><h4 data-aos="fade-down">Sushiman</h4></Link>
+                <Link to='/' onClick={(e) => {
+                      if (window.location.pathname === "/") {
+                        e.preventDefault(); // Prevent default navigation
+                        window.location.reload(); // Force page refresh
+                      }
+                    }}
+                >
+                  <h4 data-aos="fade-down">Sushiman</h4>
+                </Link>
                 <div className="header__logo-overlay"></div>
                 </div>
 
@@ -60,11 +86,9 @@ function Header({ onLoginClick }) {
                       {user ? (
                         <>
                           <li>
-                            <Link to="/private"
-                              className={location.pathname === "/private" ? "active" : ""}
-                            >
-                              private
-                            </Link>
+                            <a href="#" className={location.pathname === "/private" ? "active" : ""} onClick={handlePrivateClick}>
+                              Private
+                            </a>
                           </li>
                           <button className="header__logout" onClick={logout}>Logout</button>
                         </>

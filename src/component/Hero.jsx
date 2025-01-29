@@ -1,6 +1,6 @@
 import React from 'react'
 import '../css/Hero.css';
-import  {Link, useNavigate} from 'react-router-dom';
+import  {useNavigate} from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function Hero({ onLoginClick }) {
@@ -36,7 +36,7 @@ function Hero({ onLoginClick }) {
             <div className="hero-content-info" data-aos="fade-left">
                 {user && (
                     
-                    <h2 className="name">Hello, <span>{user.name}</span></h2>
+                    <h2 className="name">Welcome, <span>{user.name}</span></h2>
                     
                 )}
                 <h1>Feel the taste of Japanese food</h1>

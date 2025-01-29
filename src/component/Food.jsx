@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import Subscription from './Subscription';
-import Footer from './Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../css/Food.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-function Food({ onLoginClick, onConsultClick }) {
+function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
   const location = useLocation();
   const foods = location.state?.foods || [];
   const [categories, setCategories] = useState([]);
@@ -79,10 +78,15 @@ function Food({ onLoginClick, onConsultClick }) {
 
   return (
     <div>
-      <Header onLoginClick={onLoginClick} />
+      <Header onLoginClick={onLoginClick}   onShowInfoClick={onShowInfoClick}/>
       <section className="food-list">
+        {user && (
+          <div className="username" data-aos="fade-right">
+            <h2 className="name">Welcome, <span className='first'>{user.name}</span></h2>
+          </div>
+        )}
         <div className="header-container">
-          <h2 className="title">Available Foods /入手可能な食品</h2>
+          <h2 className="title"data-aos="fade-up">Available Foods /入手可能な食品</h2>
           <div className="category-filter" data-aos="fade-up">
               <select
                 value={selectedCategory ? selectedCategory.value : ''}
@@ -138,7 +142,6 @@ function Food({ onLoginClick, onConsultClick }) {
         </div>
       </section>
       <Subscription onLoginClick={onLoginClick} />
-      <Footer />
     </div>
   );
 }

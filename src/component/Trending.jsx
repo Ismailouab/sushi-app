@@ -25,12 +25,12 @@ function Trending() {
         <p className="sushi__description">Feel the taste of the most delicious Sushi here.</p>
         <ul className="trending__list flex-between">
           {/* List items */}
-          {["Make Sushi", "Oshizushi", "Uramaki Sushi", "Nigiri Sushi", "Temaki Sushi", "Inari Sushi"].map((item, index) => (
+          {foods.slice(4).map((item, index) => (
             <li key={index}>
               <div className="trending__icon flex-center">
                 <img src="./assets/check.svg" alt="check" />
               </div>
-              <p>{item}</p>
+              <p>{item.name}</p>
             </li>
           ))}
         </ul>
@@ -45,9 +45,11 @@ function Trending() {
         </div>
       </div>
     </section>
-    <div className="trending__discover" data-aos="zoom-in">
-      <Link to='/food' state={{ foods }}><p>Discover</p></Link>
-    </div>
+     <Link to='/food' state={{ foods }}>
+        <div className="trending__discover" data-aos="zoom-in">
+          <p>Discover</p>
+        </div>
+    </Link>
     <section className="trending-drinks">
       <div className="trending__image flex-center">
         <img src="./assets/sushi-4.png" alt="sushi-4" data-aos="fade-right" />

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../css/Footer.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'; 
-function Footer({ onLoginClick }) {
+function Footer({ onLoginClick,onShowInfoClick }) {
   const [foods, setFoods] = useState([]);
   const { user} = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
 
   // Fetch data from API
@@ -19,36 +18,56 @@ function Footer({ onLoginClick }) {
       .catch((error) => {
         console.error('Error fetching food data:', error);
       });
-  }, []);
-  const handleLinkClick = (e, route) => {
+  }, []);    
+  const handlePrivateClick = (e) => {
+      e.preventDefault(); // Prevent navigation
+      onShowInfoClick();  // Open the modal
+  };
+  const handleDashboardClick = (e) => {
     if (!user) {
-      e.preventDefault(); // Prevent navigation if the user is not logged in
-      onLoginClick(); // Show the login modal
-    } else {
-      navigate(route); // Navigate if the user is logged in
+      e.preventDefault();
+      onLoginClick();
     }
+
   };
   return (
     <>
       <footer className="footer flex-between">
         <h3 className="footer__logo">
-        <Link to='/'><span>Sushi</span>man</Link>
+          <Link to='/'
+            onClick={(e) => {
+               if (window.location.pathname === "/") {
+                  e.preventDefault(); // Prevent default navigation
+                  window.location.reload(); // Force page refresh
+                }
+            }}>
+            <span>Sushi</span>man
+          </Link>
         </h3>
         <ul className="footer__nav">
-            <li>
-              <a href="#menu" 
-                onClick={(e) => handleLinkClick(e, '/menu')} >
-                  Menu
-              </a>
-            </li> 
+             
             <Link to='/food' state={{ foods }}><li><a href="#food">Food</a></li></Link>
             <li>
-              <a href="#services"
-                onClick={(e) => handleLinkClick(e, '/admin/dashboard')} >
-                Dashbord
-              </a>
+                <Link to={user ? (user.role === 'admin' ? '/admin/dashboard' : '/client/dashboard') : '#'}
+                  className={location.pathname === "/admin/dashboard" || location.pathname === "/client/dashboard" ? "active" : ""}
+                  onClick={handleDashboardClick}>
+                  Dashboard
+                </Link>
             </li>
             <Link to='/aboutus'><li><a href="#about-us">About Us</a></li></Link>
+            {user ? (
+                        <>
+                          <li>
+                            <a href="#" className={location.pathname === "/private" ? "active" : ""} 
+                              onClick={handlePrivateClick}>
+                              Private
+                            </a>
+                          </li>
+
+                        </>
+                      ) : (
+                        console.log('user not logged in')
+                      )}
         </ul>
         <ul className="footer__social">
             <li className="flex-center">

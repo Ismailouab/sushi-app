@@ -8,7 +8,7 @@ function CardFood({ onClose, food }) {
         <button className="modal-close" onClick={onClose}>
           &times;
         </button>
-        <div className="modal-content">
+        <div className="modal-content" data-aos="fade-right">
           <img
             src={food.image.startsWith('http') ? food.image : `/${food.image.replace("public/", "")}`}
             alt={food.name}

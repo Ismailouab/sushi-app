@@ -1,19 +1,19 @@
 import React from 'react'
 import Header from './Header'
 import { useAuth } from '../context/AuthContext';
-import Footer from './Footer';
 
-function ClientDashboard() {
+
+function ClientDashboard({onShowInfoClick}) {
   const { user } = useAuth();
   return (
     <div>
-      <Header/>
+      <Header onShowInfoClick={onShowInfoClick}/>
       {user && (
-        <div className="client-dashboard__user-info">
+        <div className="client-dashboard__user-info" data-aos="fade-right">
           <h2 className="name">Hello, {user.name}</h2>
         </div>
       )}
-      <Footer/>
+
     </div>
   )
 }

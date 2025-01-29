@@ -10,7 +10,21 @@
   width: 100%;
   padding: 0 16px;  /* Adjust padding as needed */
 }
+.username {
+  font-size: 30px;
+  font-family: var(--playfair-display);
+  font-weight: 500;
+  color: var(--secondary-color);
+  text-align: left;
+  margin: 5px 30px;  /* Remove default margin */
+}
+ .first{
+  font-size: 50px;
+  font-family:  var(--playfair-display);
+  font-weight: 580;
+  color: var(--primary-color);
 
+}
 /* Style the title */
 .title {
   font-size: 35px;

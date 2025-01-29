@@ -12,7 +12,7 @@ function Subscription({ onLoginClick }) {
           
           {user ? (
                 <>
-                    <h2 className="name">Hello, <span>{user.name}</span></h2>
+                    <h2 className="name">Welcome, <span>{user.name}</span></h2>
                 </>
                ) : (
                 <>

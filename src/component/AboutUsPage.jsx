@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import Header from './Header';
 import PopularFoods from './PopularFoods';
-import '../css/AboutUsPage.css'; // CSS file containing the styles
-import Footer from './Footer';
+import '../css/AboutUsPage.css'; 
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-function AboutUsPage({ onLoginClick }) {
+import { useAuth } from '../context/AuthContext';
+
+function AboutUsPage({ onLoginClick,onShowInfoClick }) {
+  const { user } = useAuth();
   useEffect(()=>{
     AOS.init({
       duration: 1000,
@@ -17,8 +20,12 @@ function AboutUsPage({ onLoginClick }) {
   return (
     <div>
       {/* Header Section */}
-      <Header onLoginClick={onLoginClick}/>
-
+      <Header onLoginClick={onLoginClick} onShowInfoClick={onShowInfoClick}/>
+      {user && (
+          <div className="username" data-aos="fade-right">
+            <h2 className="name">Welcome, <span className='first'>{user.name}</span></h2>
+          </div>
+        )}
       {/* About Us Title */}
       <section className="about-us-title-section" data-aos="zoom-in">
         <h1 className="about-us-title">About Us / 私たちに関しては</h1>
@@ -70,7 +77,6 @@ function AboutUsPage({ onLoginClick }) {
 
       {/* Popular Foods Section */}
       <PopularFoods />
-      <Footer />
     </div>
   );
 }

@@ -12,10 +12,9 @@ function Order() {
       <Header/>
       {user && (
         <div className="admin-dashboard__user-info">
-          <h2 className="name">Hello, {user.name}</h2>
+          <h2 className="name">Welcome, {user.name}</h2>
         </div>
       )}
-      <Footer/>
     </div>
   )
 }
