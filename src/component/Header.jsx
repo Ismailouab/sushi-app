@@ -48,7 +48,7 @@ function Header({ onLoginClick,onShowInfoClick }) {
 
   return (
     <>
-        <header>
+        <header data-aos="fade-down">
             <nav className="header__nav">
                 <div className="header__logo">
                 <Link to='/' onClick={(e) => {

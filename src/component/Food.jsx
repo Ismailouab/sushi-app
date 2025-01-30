@@ -61,7 +61,6 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
       duration: 1000,
       offset: 100,
     });
-
     // Re-initialize AOS when filteredFoods changes
     AOS.refresh(); // This is the key to re-trigger AOS animations on re-render
   }, [filteredFoods]);

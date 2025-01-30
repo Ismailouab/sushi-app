@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../css/Login.css'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Register from "./Register";
 import { useAuth } from '../context/AuthContext';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 function Login({ onClose }) {
     const [showRegister, setshowRegister] = useState(false);
     const [email, setEmail] = useState("");
@@ -12,7 +13,13 @@ function Login({ onClose }) {
     const [errorMessage, setErrorMessage] = useState("");
     const { login } = useAuth();
     const navigate = useNavigate();
-
+     // Animation
+    useEffect(()=>{
+      AOS.init({
+        duration: 1000,
+        offset: 100,
+      });
+  },[]);
     const toggleRegisterModal = () => {
         setshowRegister((prevState) => !prevState);
       };
@@ -61,19 +68,12 @@ function Login({ onClose }) {
       }
     };
     
-    
-    
-    
-    
-    
-  
-    
   return (
-    <div className="login" >
-      <div className="login__container">
+    <div className="login" data-aos="zoom-in">
+      <div className="login__container" >
       <button className="login__close" onClick={onClose} >&times;</button>
-        <h2 className="login__title">Login</h2>
-        <form className="login__form" onSubmit={handleLogin}>
+        <h2 className="login__title" data-aos="fade-down">Login</h2>
+        <form className="login__form" onSubmit={handleLogin} data-aos="fade-down">
           {/* Email Input */}
           <div className="login__form-group">
             <label htmlFor="email" className="login__label">
@@ -109,7 +109,7 @@ function Login({ onClose }) {
           </div>
 
           {/* Submit Button */}
-          <button type="submit" className="login__button">
+          <button type="submit" className="login__button" >
             Login
           </button>
           {/* Error message */}
@@ -117,7 +117,7 @@ function Login({ onClose }) {
         </form>
 
         {/* Register Link */}
-        <p className="login__register">
+        <p className="login__register" data-aos="fade-down">
           Don't have an account?{" "}
           <span
             className="login__link"

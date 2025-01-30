@@ -18,7 +18,7 @@ function Hero({ onLoginClick }) {
       };
   return (
     <section className="hero">
-        <div className="hero-image">
+        <div className="hero-image"  data-aos="fade-up">
             <img
                 src="./assets/sushi-1.png"
                 alt="sushi"

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Register.css";
 import { useNavigate } from "react-router-dom";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Register({ onCloseRegiter }) {
   const [formData, setFormData] = useState({
@@ -11,7 +13,13 @@ function Register({ onCloseRegiter }) {
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  // Animation
+  useEffect(()=>{
+    AOS.init({
+      duration: 1000,
+      offset: 100,
+    });
+},[]);
   // Handle form input changes
   const handleChange = (e) => {
 
@@ -51,13 +59,13 @@ function Register({ onCloseRegiter }) {
   };
 
   return (
-    <div className="register">
-      <div className="register__container">
+    <div className="register" >
+      <div className="register__container" data-aos="zoom-in">
         <button className="register__close" onClick={onCloseRegiter}>
           &times;
         </button>
-        <h2 className="register__title">Create an Account</h2>
-        <form className="register__form" onSubmit={handleSubmit}>
+        <h2 className="register__title" data-aos="fade-down">Create an Account</h2>
+        <form className="register__form" onSubmit={handleSubmit} data-aos="fade-down">
           {/* Name Input */}
           <div className="register__form-group">
             <label htmlFor="name" className="register__label">
@@ -134,7 +142,7 @@ function Register({ onCloseRegiter }) {
         </form>
 
         {/* Login Link */}
-        <p className="register__login">
+        <p className="register__login" data-aos="fade-down">
           Already have an account?{" "}
           <span>
             <button className="register__link" onClick={onCloseRegiter}>
