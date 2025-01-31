@@ -75,6 +75,7 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
     }
   };
 
+
   return (
     <div>
       <Header onLoginClick={onLoginClick}   onShowInfoClick={onShowInfoClick}/>
@@ -129,7 +130,10 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
                   <td>{food.rating}</td>
                   <td>${food.price}</td>
                   <td>
-                    <button className="food-button" onClick={() => handleOrderClick(food)}>Order</button>
+                     {/* Show "Order" button only if the user is a client */}
+                    {user && user.role_id === 2 && (
+                      <button className="food-button" onClick={() => handleOrderClick(food)}>Order</button>
+                    )}
                     <button className="food-button" onClick={() => onConsultClick(food)}>
                       Consult
                     </button>

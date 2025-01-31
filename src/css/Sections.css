@@ -112,17 +112,17 @@ a {
 /* START: header media querie */
 @media screen and (max-width: 900px) {
   .header__nav {
-    background: var(--primary-color);
+    background: var(--primary-color) !important;
   }
   .header__nav .header__menu li .active {
     color: #fff;
   }
   .header__menu {
-    display: none;
+    display: none !important;
   }
 
   .header__menu-mobile {
-    display: flex;
+    display: flex !important;
   }
 }
 
@@ -136,58 +136,58 @@ a {
 /* START: about us media queries */
 @media screen and (max-width: 1024px) {
   .about-us {
-    flex-direction: column ;
+    flex-direction: column !important;
   }
 
   .about-us__image {
-    flex-direction: row;
+    flex-direction: row !important;
   }
 
   .about-us__image-sushi3 {
-    border-bottom: none;
-    border-right: 8px solid var(--color-creamson);
+    border-bottom: none !important;
+    border-right: 8px solid var(--color-creamson) !important;
   }
 
   .about-us__button {
-    display: none;
+    display: none !important;
   }
 }
 
 @media screen and (max-width: 750px) {
   .about-us__image {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 
   .about-us__image-sushi3 {
-    border-bottom: 8px solid var(--color-creamson);
-    border-right: none;
+    border-bottom: 8px solid var(--color-creamson)!important;
+    border-right: none !important;
   }
 
   .about-us__button {
-    display: block;
-    top: 47%;
+    display: block !important;
+    top: 47% !important;
   }
 }
 
 @media screen and (max-width: 550px) {
   .about-us__image-sushi2 img,
   .about-us__image-sushi3 img {
-    width: 50%;
-    height: 160px;
+    width: 50% !important;
+    height: 160px !important;
 
-    object-fit: contain;
+    object-fit: contain !important;
   }
 
   .about-us__image div {
-    padding: 32px;
+    padding: 32px !important;
   }
 
   .about-us__button {
-    top: 44%;
+    top: 44% !important;
   }
 
   .about-us__content {
-    padding: 32px;
+    padding: 32px !important;
   }
 }
 /* END: about us media queries */
@@ -196,11 +196,11 @@ a {
 /* START: hero media queries */
 @media screen and (max-width: 1060px) {
   .hero {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 
   .hero-image img {
-    width: 100%;
+    width: 100% !important;
 
     transform: matrix(1, 0.05, 0, 1.25, 0, 0) !important;
   }
@@ -208,35 +208,35 @@ a {
 
 @media screen and (max-width: 750px) {
   .hero-image h2 {
-    font-size: 70px;
-    line-height: 90px;
+    font-size: 70px !important;
+    line-height: 90px !important;
   }
 }
 
 @media screen and (max-width: 550px) {
   .hero-image h2 {
-    font-size: 40px;
-    line-height: 60px;
+    font-size: 40px !important;
+    line-height: 60px !important;
   }
 
   .hero-content-info {
-    padding: 32px;
+    padding: 32px !important;
   }
 
   .hero-content-info h1 {
-    font-size: 60px;
+    font-size: 60px !important;
   }
 
   .hero-content-info p {
-    margin: 32px 0;
+    margin: 32px 0  !important;
   }
 
   .hero-content__buttons {
-    margin: 41px 0;
+    margin: 41px 0 !important;
   }
 
   .hero-content__testimonial {
-    padding: 32px;
+    padding: 32px !important;
   }
 }
 
@@ -245,12 +245,12 @@ a {
 /* START: popular media queries */
 @media screen and (max-width: 550px) {
   .popular-foods {
-    padding: 64px 32px;
+    padding: 64px 32px !important;
   }
 
   .popular-foods__card,
   .popular-foods__card.active-card {
-    min-width: 100%;
+    min-width: 100% !important;
   }
 }
 /* END: popular media queries */
@@ -258,35 +258,35 @@ a {
 /* START: subscribe media queries */
 @media screen and (max-width: 550px) {
   .subscription {
-    padding: 64px 32px;
+    padding: 64px 32px  !important;
   }
 
   .subscription h2 {
-    font-size: 68px;
-    line-height: 100px;
+    font-size: 68px !important;
+    line-height: 100px  !important;
   }
 
   .subscription__form {
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: column !important;
+    gap: 20px !important;
 
-    min-width: 100%;
-    border-radius: 20px;
-    padding: 0;
+    min-width: 100%   !important;
+    border-radius: 20px !important;
+    padding: 0 !important;
 
-    border: none;
+    border: none !important;
   }
 
   .subscription__form input {
-    min-height: 50px;
+    min-height: 50px !important;
 
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 10px 20px;
-    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    padding: 10px 20px !important;
+    border-radius: 30px !important;
   }
 
   .subscription__form button {
-    min-width: 100%;
+    min-width: 100% !important;
   }
 }
 /* END: subscribe media queries */
@@ -294,35 +294,35 @@ a {
 /* START: trending media queries */
 @media screen and (max-width: 1024px) {
   .trending-sushi {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 
   .trending-drink {
-    flex-direction: column-reverse;
+    flex-direction: column-reverse  !important;
   }
 
   .trending__image {
-    width: 100%;
-    background-size: cover;
+    width: 100% !important;
+    background-size: cover !important;
   }
 
   .trending__discover {
-    display: none;
+    display: none !important;
   }
 
   .trending__arrow {
-    display: none;
+    display: none !important;
   }
 }
 
 @media screen and (max-width: 550px) {
   .trending__image img {
-    width: 70%;
-    height: 70%;
+    width: 70% !important;
+    height: 70% !important;
   }
 
   .trending__content {
-    padding: 32px;
+    padding: 32px !important;
   }
 }
 /* END: trending media queries */

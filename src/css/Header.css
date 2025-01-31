@@ -101,5 +101,30 @@
     opacity: 0.9;
     transform: translateY(-2px);
   }
+  
+  .header__mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    padding: 60px 0;
+    list-style: none;
+  }
+  
+  .header__mobile-menu.open {
+    display: block;
+  }
+  
+  .header__mobile-menu li {
+    margin: 20px 0;
+  }
+  
+  .header__mobile-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+  }
 
  

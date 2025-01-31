@@ -34,7 +34,9 @@ export const AuthProvider = ({ children }) => {
         }
       });
     }
+    
   }, []);
+  console.log(user);
 
   const login = (userData) => {
     setUser(userData);
