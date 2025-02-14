@@ -36,8 +36,6 @@ function Login({ onClose }) {
         console.log("Login Response:", response.data);  // Log the entire response data
     
         const user = response.data.user;  // Access the user data from the response
-         // Access the token from the response
-        console.log("User Data:", user);  // Log the user data
 
 
 

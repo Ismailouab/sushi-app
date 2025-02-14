@@ -36,7 +36,7 @@ function Header({ onLoginClick,onShowInfoClick }) {
  
   const handleDashboardClick = (e) => {
     if (!user) {
-      e.preventDefault();
+      e.preventDefault(); // Prevent navigation if no user
       onLoginClick();
     }
   };
@@ -69,9 +69,11 @@ function Header({ onLoginClick,onShowInfoClick }) {
                        > Food </Link>
                   </li>
                   <li>
-                    <Link to={user ? (user.role === 'admin' ? '/admin/dashboard' : '/client/dashboard') : '#'}
-                    className={location.pathname === "/admin/dashboard" || location.pathname === "/client/dashboard" ? "active" : ""}
-                    onClick={handleDashboardClick}>
+                    <Link 
+                      to={user?.role_id === 1 ? '/admin/dashboard' : '/client/dashboard'} 
+                      className={location.pathname.includes("/dashboard") ? "active" : ""}
+                      onClick={handleDashboardClick}
+                    >
                       Dashboard
                     </Link>
                   </li>

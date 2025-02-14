@@ -1,0 +1,141 @@
+.admin-dashboard__breadcrumb ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 10px;
+  }
+  
+.admin-dashboard__breadcrumb li {
+    font-weight: 500;
+    font-family: var(--plus-jakarta-sans);
+    color: var(--secondary-color);
+    font-size: 22px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 8px 12px;
+    line-height: 20px;
+    transition: all 0.3s ease;
+  }
+  
+.admin-dashboard__breadcrumb li:hover {
+    color: var(--primary-color);
+  }
+  
+.admin-dashboard__breadcrumb li.active {
+    font-weight: bold;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+.manage-food__title {
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-family: var(--playfair-display);
+}
+.manage-food__button {
+    font-weight: 600;
+    font-family: var(--plus-jakarta-sans);
+    color: #fff;
+    background-color: var(--primary-color);
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+.manage-food__button:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+  
+.food-category {
+    width: 100%;
+    margin-top: 10px;
+}
+.category-title{
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-family: var(--playfair-display);
+    border-bottom: 2px solid var(--primary-color);
+}
+  
+.food-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 10px;
+    
+}
+  
+.food-card {
+    border-radius: 10px;
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    background-color: var(--primary-color)
+}
+  
+.food-card:hover {
+    transform: scale(1.05);
+}
+  
+.food-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+  
+.food-card h4 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0;
+    font-family: var(--plus-jakarta-sans);
+}
+  
+.food-card p {
+    font-size: 16px;
+    color:  var(--color-creamson);
+    margin: 5px 0;
+    font-family: var(--plus-jakarta-sans)
+}
+  
+.food-card p strong {
+    color:  var(--secondary-color);
+    font-family: var(--plus-jakarta-sans);
+}
+  
+.edit-btn,
+.delete-btn {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+  
+.delete-btn {
+    background: var(--secondary-color);
+}
+  
+.edit-btn:hover {
+    background-color: var(--color-creamson);
+    color: var(--secondary-color);
+}
+  
+.delete-btn:hover {
+    background-color: var(--color-creamson);
+    color: var(--secondary-color);
+}
+  

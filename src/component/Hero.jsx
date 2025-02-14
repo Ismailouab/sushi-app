@@ -9,8 +9,8 @@ function Hero({ onLoginClick }) {
 
     const handleOrderClick = () => {
         if (user) {
-          // If user is logged in, navigate to the Order page
-          navigate('/order');
+          // If user is logged in, navigate to Dashboard page
+          navigate('/client/dashboard');
         } else {
           // If user is not logged in, show the login modal
           onLoginClick();

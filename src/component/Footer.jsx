@@ -23,13 +23,6 @@ function Footer({ onLoginClick,onShowInfoClick }) {
       e.preventDefault(); // Prevent navigation
       onShowInfoClick();  // Open the modal
   };
-  const handleDashboardClick = (e) => {
-    if (!user) {
-      e.preventDefault();
-      onLoginClick();
-    }
-
-  };
   return (
     <>
       <footer className="footer flex-between">
@@ -48,11 +41,18 @@ function Footer({ onLoginClick,onShowInfoClick }) {
              
             <Link to='/food' state={{ foods }}><li><a href="#food">Food</a></li></Link>
             <li>
-                <Link to={user ? (user.role === 'admin' ? '/admin/dashboard' : '/client/dashboard') : '#'}
-                  className={location.pathname === "/admin/dashboard" || location.pathname === "/client/dashboard" ? "active" : ""}
-                  onClick={handleDashboardClick}>
-                  Dashboard
-                </Link>
+              <Link 
+                        to={user?.role_id === 1 ? '/admin/dashboard' : '/client/dashboard'} 
+                        className={location.pathname.includes("/dashboard") ? "active" : ""}
+                        onClick={(e) => {
+                          if (!user) {
+                            e.preventDefault(); // Prevent navigation if no user
+                            onLoginClick();
+                          }
+                        }}
+                      >
+                        Dashboard
+              </Link>
             </li>
             <Link to='/aboutus'><li><a href="#about-us">About Us</a></li></Link>
             {user ? (

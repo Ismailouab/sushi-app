@@ -42,7 +42,7 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
 
   // Filter foods based on the selected category
   const handleCategoryChange = (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault(); 
 
     const selectedOption = categories.find(
       (category) => category.value === parseInt(e.target.value)
@@ -103,7 +103,7 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
             
           </div>
         </div>
-        <div className="food-table-container" data-aos="fade-up">
+        <>
           <table className="food-table" data-aos="zoom-in">
             <thead>
               <tr>
@@ -142,7 +142,7 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </>
       </section>
       <Subscription onLoginClick={onLoginClick} />
     </div>

@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 function ClientDashboard({onShowInfoClick}) {
   const { user } = useAuth();
+  
   return (
     <div>
       <Header onShowInfoClick={onShowInfoClick}/>
