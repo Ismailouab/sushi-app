@@ -11,7 +11,7 @@ import "../css/AdminDashboard.css";
 
 function AdminDashboard({ onShowInfoClick }) {
   const { user } = useAuth();
-  const {  groupedFoods, loading } = useFood(); // Use global food context
+  const {groupedFoods, loading } = useFood(); // Use global food context
   const [selectedSection, setSelectedSection] = useState("food");
 
   AOS.init({ duration: 1000, offset: 100 });
@@ -35,7 +35,13 @@ function AdminDashboard({ onShowInfoClick }) {
             className={selectedSection === "food" ? "active" : ""}
             onClick={() => setSelectedSection("food")}
           >
-            Food
+            Foods
+          </li>
+          <li
+            className={selectedSection === "users" ? "active" : ""}
+            onClick={() => setSelectedSection("users")}
+          >
+            Users
           </li>
         </ul>
       </nav>
@@ -91,6 +97,12 @@ function AdminDashboard({ onShowInfoClick }) {
       )}
       {selectedSection === "addFood" && <AddFood  setSelectedSection={setSelectedSection}/>}
       {selectedSection === "updateFood" && <UpdateFood  setSelectedSection={setSelectedSection}/>}
+      {/* Users Section */}
+      {selectedSection === "users" && (
+        <div>
+          <h3 className="manage-food__title">Manage Users</h3>
+        </div>
+     )}
     </div>
   );
 }
