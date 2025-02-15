@@ -45,12 +45,15 @@ function Hero({ onLoginClick }) {
                 anytime.
                 </p>
                 <div className="hero-content__buttons">
-                <button 
-                    className="hero-content__order-button"  
-                    onClick={handleOrderClick}// Use the handleOrderClick function
-                > 
-                    Order Now 
-                </button>
+                {/* Only show the "Order Now" button if the user is a client */}
+                { user?.role_id === 2 && (
+                            <button
+                                className="hero-content__order-button"
+                                onClick={handleOrderClick}
+                            >
+                                Order Now
+                            </button>
+                        )}
                 <button className="hero-content__play-button">
                     <img
                     src="./assets/play-circle.svg"

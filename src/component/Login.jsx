@@ -33,24 +33,26 @@ function Login({ onClose }) {
           email,
           password
         });
-        console.log("Login Response:", response.data);  // Log the entire response data
+        console.log("📌 Full API Response:", response.data);  // Log the entire response data
     
-        const user = response.data.user;  // Access the user data from the response
+        const { token, user } = response.data;  // Destructure response
 
+       // Check if token and user are both present
+    if (!token || !user) {
+      throw new Error("Token or user data is missing");
+    }
 
+    // Check if user object contains the required fields (role_id and name)
+    if (!user.role_id || !user.name) {
+      throw new Error("User data is incomplete");
+    }
 
-        // Check if user object contains the required fields (role_id and name)
-        if (!user || !user.role_id) {
-          throw new Error("Role ID is missing in user data");
-        }
-    
-        // Store token and user data
-        localStorage.setItem('auth_token', response.data.token);
-        const userRole = user.role_id;  // Use role_id directly from user
-    
-        console.log("Role ID:", userRole);
         // Set user in context
-        login(user);
+        login(user, token);
+        console.log("✅ Token saved:", token);
+      const userRole = user.role_id;
+
+      console.log("Role ID:", userRole)
         // Close modal
         onClose();
         // Logic to navigate based on role

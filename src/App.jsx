@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Routes ,} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { FoodProvider } from "./context/FoodContext";
 import Sections from './component/Sections';
 import Order from './component/Order';
 import Login from './component/Login';
@@ -11,7 +12,6 @@ import AboutUsPage from './component/AboutUsPage';
 import AdminDashboard from './component/AdminDashboard'; 
 import ClientDashboard from './component/ClientDashboard'; 
 import PrivatInfo from './component/PrivatInfo';
-import Header from './component/Header';
 import Footer from './component/Footer';
 
 
@@ -46,25 +46,31 @@ const App = () => {
   return (
     <>
     <AuthProvider>
-      {/* Render the Login modal if showLogin is true */}
-      {showLogin && <Login onClose={closeLoginModal} />}
-      {/* Render the CardFood modal if showCardFood is true */}
-      {showCardFood && <CardFood food={selectedFood} onClose={closeCardFood} />}
-      {/* Render the PrivatInfo modal if showInfo is true */}
-      {showInfo && <PrivatInfo onClose={closeInfoModal} />}
-        <Routes>
-          <Route path="/" element={<Sections onLoginClick={toggleLoginModal} onShowInfoClick={toggleInfoModal} />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/food" element={<Food onLoginClick={toggleLoginModal} onConsultClick={toggleCardFood}  onShowInfoClick={toggleInfoModal} />} />
-          <Route path="/aboutus" element={<AboutUsPage onLoginClick={toggleLoginModal}  onShowInfoClick={toggleInfoModal}/>}/>
-          <Route path="/private" element={<PrivatInfo />} /> 
-          <Route path="/admin/dashboard" element={<AdminDashboard  onShowInfoClick={toggleInfoModal}/>} />
-          <Route path="/client/dashboard" element={<ClientDashboard  onShowInfoClick={toggleInfoModal}/>} />
-        </Routes>
-        <Footer onLoginClick={toggleLoginModal} onShowInfoClick={toggleInfoModal} />
-      </AuthProvider>
+     
+        <FoodProvider>
+          
+            {/* Render the Login modal if showLogin is true */}
+            {showLogin && <Login onClose={closeLoginModal} />}
+            {/* Render the CardFood modal if showCardFood is true */}
+            {showCardFood && <CardFood food={selectedFood} onClose={closeCardFood} />}
+            {/* Render the PrivatInfo modal if showInfo is true */}
+            {showInfo && <PrivatInfo onClose={closeInfoModal} />}
+              <Routes>
+                <Route path="/" element={<Sections onLoginClick={toggleLoginModal} onShowInfoClick={toggleInfoModal} />} />
+                <Route path="/order" element={<Order />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/food" element={<Food onLoginClick={toggleLoginModal} onConsultClick={toggleCardFood}  onShowInfoClick={toggleInfoModal} />} />
+                <Route path="/aboutus" element={<AboutUsPage onLoginClick={toggleLoginModal}  onShowInfoClick={toggleInfoModal}/>}/>
+                <Route path="/private" element={<PrivatInfo />} /> 
+                <Route path="/admin/dashboard" element={ <AdminDashboard  onShowInfoClick={toggleInfoModal}/>} />
+                <Route path="/client/dashboard" element={<ClientDashboard  onShowInfoClick={toggleInfoModal}/>} />
+              </Routes>
+              <Footer onLoginClick={toggleLoginModal} onShowInfoClick={toggleInfoModal} />
+          
+        </FoodProvider>
+        
+    </AuthProvider>
     </>
   );
 };
