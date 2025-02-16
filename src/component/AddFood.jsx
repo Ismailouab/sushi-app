@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { useFood } from "../context/FoodContext"; 
+import "../css/AddFood.css";
+import '../css/AboutUs.css';
 
-
-function AddFood() {
+function AddFood({setSelectedSection}) {
   const { user, token } = useAuth();
+  const {fetchData} = useFood();
   const [foodData, setFoodData] = useState({
     name: "",
     description: "",
@@ -81,7 +84,9 @@ function AddFood() {
         }
       );
       console.log("✅ Food added successfully:", response.data);
-      window.location.reload();
+      fetchData(); // Reload the food list
+      setSelectedSection({ section: "food", foodId: null })
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       console.error("❌ Error adding food:", err);
 
@@ -99,49 +104,59 @@ function AddFood() {
   };
 
   return (
-    <div>
-      <h3>Add New Food</h3>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
+    <div className="about-us" id="about-us" >
+    <div className="admin-dashboard__form-container" data-aos="fade-right">
+      <h3 className="AddFood__title">Add New Food</h3>
+      <form onSubmit={handleSubmit} className="admin-dashboard__form">
+        <div className="admin-dashboard__form-group">
+          <label>Name:</label>
           <input
             type="text"
             name="name"
             value={foodData.name}
             onChange={handleChange}
+            className="admin-dashboard__input"
           />
-        </label>
-        <label>
-          Description:
+        </div>
+
+        <div className="admin-dashboard__form-group">
+          <label>Description:</label>
           <textarea
             name="description"
             value={foodData.description}
             onChange={handleChange}
+            className="admin-dashboard__textarea"
           />
-        </label>
-        <label>
-          Price:
+        </div>
+
+        <div className="admin-dashboard__form-group">
+          <label>Price:</label>
           <input
             type="number"
             name="price"
             value={foodData.price}
             onChange={handleChange}
+            className="admin-dashboard__input"
           />
-        </label>
-        <label>
-          Image:
+        </div>
+
+        <div className="admin-dashboard__form-group">
+          <label>Image:</label>
           <input
             type="file"
             name="image"
             onChange={handleFileChange}
+            className="admin-dashboard__input"
           />
-        </label>
-        <label>
-          Category:
+        </div>
+
+        <div className="admin-dashboard__form-group">
+          <label>Category:</label>
           <select
             name="category_id"
             value={foodData.category_id}
             onChange={handleChange}
+            className="admin-dashboard__select"
           >
             <option value="">Select Category</option>
             {categories.map((category) => (
@@ -150,22 +165,52 @@ function AddFood() {
               </option>
             ))}
           </select>
-        </label>
-        <label>
-          Rating:
-          <select name="rating" value={foodData.rating} onChange={handleChange}>
-          <option value="">Select Rate</option>
-            <option value="1">⭐ 1</option>
-            <option value="2">⭐⭐ 2</option>
-            <option value="3">⭐⭐⭐ 3</option>
-            <option value="4">⭐⭐⭐⭐ 4</option>
-            <option value="5">⭐⭐⭐⭐⭐ 5</option>
+        </div>
+
+        <div className="admin-dashboard__form-group">
+          <label>Rating:</label>
+          <select
+            name="rating"
+            value={foodData.rating}
+            onChange={handleChange}
+            className="admin-dashboard__select"
+          >
+            <option value="">Select Rate</option>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
           </select>
-        </label>
-        <button type="submit">Add Food</button>
+        </div>
+
+        <div className="admin-dashboard__form-actions">
+          <button type="submit" className="manage-food__button">
+            Add Food
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedSection({ section: "food", foodId: null });
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="manage-food__button"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
+      <div className="about-us__image">
+            <div className="about-us__image-sushi3">
+              <img src="/assets/sushi-3.png" alt="sushi" data-aos="fade-left" />
+            </div>
+            <div className="about-us__image-sushi2">
+              <img src="/assets/sushi-2.png" alt="sushi" data-aos="fade-left" />
+            </div>
+      </div>
+   </div>
   );
 }
 

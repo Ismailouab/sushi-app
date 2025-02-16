@@ -3,18 +3,48 @@ import Header from "./Header";
 import AddFood from "./AddFood";
 import UpdateFood from "./UpdateFood";
 import { useAuth } from "../context/AuthContext";
-import { useFood } from "../context/FoodContext"; 
-
+import { useFood } from "../context/FoodContext";
+import { useUser } from "../context/UserContext"; 
+import Subscription from './Subscription';
+import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "../css/AdminDashboard.css";
 
 function AdminDashboard({ onShowInfoClick }) {
-  const { user } = useAuth();
-  const {groupedFoods, loading } = useFood(); // Use global food context
-  const [selectedSection, setSelectedSection] = useState("food");
+  const { user, token  } = useAuth(); // Use global auth context
+  const {groupedFoods, loading ,fetchData} = useFood(); // Use global food context
+  const { users, loading: usersLoading } = useUser(); // Use global user context
+  const [selectedSection, setSelectedSection] = useState({ section: "food", foodId: null });
 
   AOS.init({ duration: 1000, offset: 100 });
+
+  // Function to delete a food item
+  const handleDeleteFood = async (foodId) => {
+    if (!user || !token) {
+      alert("You must be logged in to delete food.");
+      return;
+    }
+
+    const confirmDelete = window.confirm("Are you sure you want to delete this food?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:8000/api/users/${user.id}/foods/${foodId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      
+      fetchData(); // Reload the food list
+      alert("✅ Food deleted successfully!");
+    } catch (error) {
+      console.error("❌ Error deleting food:", error);
+      alert("Failed to delete food. Please try again.");
+    }
+    
+  }; 
 
   return (
     <div>
@@ -32,14 +62,14 @@ function AdminDashboard({ onShowInfoClick }) {
       <nav className="admin-dashboard__breadcrumb" data-aos="fade-right">
         <ul>
           <li
-            className={selectedSection === "food" ? "active" : ""}
-            onClick={() => setSelectedSection("food")}
+            className={selectedSection.section === "food" ? "active" : ""}
+            onClick={() => setSelectedSection({ section: "food", foodId: null })}
           >
             Foods
           </li>
           <li
-            className={selectedSection === "users" ? "active" : ""}
-            onClick={() => setSelectedSection("users")}
+            className={selectedSection.section === "users" ? "active" : ""}
+            onClick={() => setSelectedSection({ section: "users", foodId: null })}
           >
             Users
           </li>
@@ -47,10 +77,11 @@ function AdminDashboard({ onShowInfoClick }) {
       </nav>
 
       {/* Food Section */}
-      {selectedSection === "food" && (
+      {selectedSection.section === "food" && (
         <div>
-          <h3 className="manage-food__title">Manage Food</h3>
-          <button className="manage-food__button" onClick={() => setSelectedSection("addFood")}>
+          <h3 className="manage-food__title" data-aos="fade-right">Manage Food</h3>
+          <button className="manage-food__button" 
+          onClick={() => setSelectedSection({ section: "addFood", foodId: null })} data-aos="fade-right">
             Add Food
           </button>
 
@@ -63,9 +94,9 @@ function AdminDashboard({ onShowInfoClick }) {
                 <h3 className="category-title" data-aos="fade-right">
                   {category} :
                 </h3>
-                <div className="food-list" data-aos="fade-up">
+                <div className="list" data-aos="fade-up">
                   {foods.map((food) => (
-                    <div key={food.id} className="food-card">
+                    <div key={food.id} className="card" >
                       <img
                         src={food.image.startsWith("http") ? food.image : `/${food.image.replace("public/", "")}`}
                         alt={food.name}
@@ -83,10 +114,16 @@ function AdminDashboard({ onShowInfoClick }) {
                       <p>
                         <strong>Category:</strong> {category}
                       </p>
-                      <button className="edit-btn" onClick={() => setSelectedSection("updateFood")}>
+                      <p><strong>Created At:</strong>{new Date(food.created_at).toLocaleString()}</p>
+                      <p><strong>Updated At:</strong>{new Date(food.updated_at).toLocaleString()}</p>
+                      <button className="edit-btn" 
+                         onClick={() => {
+                          setSelectedSection({ section: "updateFood", foodId: food.id });
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}>
                         Edit
                       </button>
-                      <button className="delete-btn">Delete</button>
+                      <button className="delete-btn"  onClick={() => handleDeleteFood(food.id)}>Delete</button>
                     </div>
                   ))}
                 </div>
@@ -95,16 +132,39 @@ function AdminDashboard({ onShowInfoClick }) {
           )}
         </div>
       )}
-      {selectedSection === "addFood" && <AddFood  setSelectedSection={setSelectedSection}/>}
-      {selectedSection === "updateFood" && <UpdateFood  setSelectedSection={setSelectedSection}/>}
+      {selectedSection.section === "addFood" && <AddFood  setSelectedSection={setSelectedSection}/>}
+      {selectedSection.section === "updateFood" && (
+        <UpdateFood setSelectedSection={setSelectedSection} foodId={selectedSection.foodId} />
+      )}
       {/* Users Section */}
-      {selectedSection === "users" && (
+      {selectedSection.section === "users" && (
         <div>
-          <h3 className="manage-food__title">Manage Users</h3>
+          <h3 className="manage-food__title" data-aos="fade-right">All Users</h3>
+
+          {/* Show loading indicator for users */}
+          {usersLoading ? (
+            <p>Loading users...</p>
+          ) : (
+            <div className="list"  data-aos="fade-up">
+              {users.map((user) => (
+                <div key={user.id} className="card" >
+                  <img src="/assets/man-user-circle-icon.svg" alt="facebook"/>
+                  <h4>{user.name}</h4>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Role:</strong> {user.role.name}</p>
+                  <p><strong>Join:</strong> {new Date(user.created_at).toLocaleString()}</p>
+                  <p><strong>Update At:</strong> {new Date(user.updated_at).toLocaleString()}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-     )}
+      )}
+      <Subscription />
     </div>
+    
   );
+
 }
 
 export default AdminDashboard;

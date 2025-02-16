@@ -3,7 +3,7 @@ import '../css/AboutUs.css';
 import { Link } from 'react-router-dom';
 function AboutUs() {
   return (
-    <>
+    
         <section className="about-us" id="about-us">
             <div className="about-us__image">
                 <div className="about-us__image-sushi3">
@@ -23,7 +23,7 @@ function AboutUs() {
                 <p className="sushi__description">We will continue to provide the experience of Omotenashi, the Japanese mindset of hospitality, with our shopping and dining for our customers.</p>
             </div>
         </section>
-    </>
+    
   )
 }
 

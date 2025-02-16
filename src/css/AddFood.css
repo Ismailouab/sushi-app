@@ -1,0 +1,93 @@
+/* Container for the form */
+.admin-dashboard__form-container {
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 10px;
+    padding: 64px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+  }
+  
+  /* Title */
+  .AddFood__title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-family: var(--playfair-display);
+    border-bottom: 2px solid var(--primary-color);;
+  }
+  
+  /* Form */
+  .admin-dashboard__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Form group */
+  .admin-dashboard__form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Input fields */
+  .admin-dashboard__input,
+  .admin-dashboard__select,
+  .admin-dashboard__textarea {
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: var(--plus-jakarta-sans);
+    margin-top: 5px;
+  }
+  
+  .admin-dashboard__input:focus,
+  .admin-dashboard__select:focus,
+  .admin-dashboard__textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+  
+  /* Textarea */
+  .admin-dashboard__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Submit and Cancel buttons */
+  .admin-dashboard__form-actions {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .manage-food__button {
+    font-weight: 600;
+    font-family: var(--plus-jakarta-sans);
+    color: #fff;
+    background-color: var(--primary-color);
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .manage-food__button:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 15px;
+  }
+  

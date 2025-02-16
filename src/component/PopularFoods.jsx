@@ -9,7 +9,7 @@ function PopularFoods() {
   const [foods, setFoods] = useState([]);
 
   // Fetch data from API
-  useEffect(() => {
+  const fetchFoods = async () => {
     axios.get('http://localhost:8000/api/foods')
       .then((response) => {
         console.log('API Response:', response.data); // Check this in the console
@@ -18,8 +18,10 @@ function PopularFoods() {
       .catch((error) => {
         console.error('Error fetching food data:', error);
       });
+  };
+  useEffect(() => {
+    fetchFoods();
   }, []);
-  
 
   // Slider settings for react-slick
   const settings = {

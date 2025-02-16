@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../css/Register.css";
-import { useNavigate } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-function Register({ onCloseRegiter }) {
+function Register({ onCloseRegiter, onClose  }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,7 +11,6 @@ function Register({ onCloseRegiter }) {
     password_confirmation: "",
   });
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
   // Animation
   useEffect(()=>{
     AOS.init({
@@ -32,7 +30,9 @@ function Register({ onCloseRegiter }) {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); 
+    setError(null);
+    
+    
 
     try {
       // Register the user directly via API call
@@ -51,7 +51,7 @@ function Register({ onCloseRegiter }) {
 
       const data = await response.json();
       localStorage.setItem("auth_token", data.token); // Store the token in localStorage
-      navigate("/client-dashboard"); // Redirect to the client dashboard
+      
       onCloseRegiter(); // Close the register modal
     } catch (err) {
       setError(err.message); // Show the error message if registration fails

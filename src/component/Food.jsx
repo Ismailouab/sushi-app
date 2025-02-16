@@ -16,7 +16,7 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
   const { user } = useAuth(); // Get user authentication state
   const navigate = useNavigate(); // For navigation
   // Fetch categories from the API
-  useEffect(() => {
+  const fetchCategories = async () => {
     fetch('http://localhost:8000/api/categories')
       .then((response) => {
         if (!response.ok) {
@@ -38,8 +38,10 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
         console.error('Error fetching categories:', error);
         alert('Failed to fetch categories. Please try again later.');
       });
+  };
+  useEffect(() => {
+    fetchCategories();
   }, []);
-
   // Filter foods based on the selected category
   const handleCategoryChange = (e) => {
     e.preventDefault(); 

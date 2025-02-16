@@ -128,7 +128,7 @@ function Login({ onClose }) {
         </p>
 
         {/* Conditionally Render Register Modal */}
-        {showRegister && <Register onCloseRegiter={closeRegisterModal} />}
+        {showRegister && <Register onCloseRegiter={closeRegisterModal}  onClose={ onClose }/>}
       </div>
     </div>
   );

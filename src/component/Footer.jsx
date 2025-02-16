@@ -49,6 +49,7 @@ function Footer({ onLoginClick,onShowInfoClick }) {
                             e.preventDefault(); // Prevent navigation if no user
                             onLoginClick();
                           }
+                          window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
                       >
                         Dashboard

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route, Routes ,} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { FoodProvider } from "./context/FoodContext";
+import { UserProvider } from './context/UserContext';
 import Sections from './component/Sections';
 import Order from './component/Order';
 import Login from './component/Login';
@@ -46,7 +47,7 @@ const App = () => {
   return (
     <>
     <AuthProvider>
-     
+      <UserProvider>
         <FoodProvider>
           
             {/* Render the Login modal if showLogin is true */}
@@ -63,13 +64,13 @@ const App = () => {
                 <Route path="/food" element={<Food onLoginClick={toggleLoginModal} onConsultClick={toggleCardFood}  onShowInfoClick={toggleInfoModal} />} />
                 <Route path="/aboutus" element={<AboutUsPage onLoginClick={toggleLoginModal}  onShowInfoClick={toggleInfoModal}/>}/>
                 <Route path="/private" element={<PrivatInfo />} /> 
-                <Route path="/admin/dashboard" element={ <AdminDashboard  onShowInfoClick={toggleInfoModal}/>} />
+                <Route path="/admin/dashboard" element={ <AdminDashboard  onShowInfoClick={toggleInfoModal} />} />
                 <Route path="/client/dashboard" element={<ClientDashboard  onShowInfoClick={toggleInfoModal}/>} />
               </Routes>
               <Footer onLoginClick={toggleLoginModal} onShowInfoClick={toggleInfoModal} />
           
         </FoodProvider>
-        
+        </UserProvider>
     </AuthProvider>
     </>
   );

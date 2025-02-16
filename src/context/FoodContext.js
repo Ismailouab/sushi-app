@@ -9,7 +9,7 @@ export const FoodProvider = ({ children }) => {
   const [groupedFoods, setGroupedFoods] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+ 
     const fetchData = async () => {
       try {
         // Fetch both foods and categories in parallel
@@ -39,11 +39,13 @@ export const FoodProvider = ({ children }) => {
       }
     };
 
+    // Fetch data when the component mounts
+  useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <FoodContext.Provider value={{ foods, categories, groupedFoods, loading }}>
+    <FoodContext.Provider value={{ foods, categories, groupedFoods, loading, fetchData }}>
       {children}
     </FoodContext.Provider>
   );
