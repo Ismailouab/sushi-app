@@ -3,7 +3,6 @@
     list-style: none;
     gap: 20px;
     padding: 10px;
-    border-bottom: 2px solid var(--primary-color);
   }
   
   .client-dashboard__breadcrumb li {
@@ -28,3 +27,8 @@
     border-bottom: 2px solid var(--primary-color);
   }
   
+  .popular-foods__card-rating img{
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}

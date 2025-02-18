@@ -101,7 +101,7 @@ function AdminDashboard({ onShowInfoClick }) {
                         src={food.image.startsWith("http") ? food.image : `/${food.image.replace("public/", "")}`}
                         alt={food.name}
                       />
-                      <h4>{food.name}</h4>
+                      <h4 className="popular-foods__card-title">{food.name}</h4>
                       <p>
                         <strong>Description:</strong> {food.description}
                       </p>
