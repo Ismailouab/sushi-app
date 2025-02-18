@@ -70,7 +70,7 @@ function Food({ onLoginClick, onConsultClick,onShowInfoClick }) {
   const handleOrderClick = (food) => {
     if (user) {
       // If the user is logged in, navigate to the Order page and pass the food info
-      navigate('/order', { state: { food } });
+      navigate('/client/dashboard', { state: { food } });
     } else {
       // If the user is not logged in, show the login modal
       onLoginClick();

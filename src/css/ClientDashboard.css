@@ -1,0 +1,30 @@
+.client-dashboard__breadcrumb ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 10px;
+    border-bottom: 2px solid var(--primary-color);
+  }
+  
+  .client-dashboard__breadcrumb li {
+    font-weight: 500;
+    font-family: var(--plus-jakarta-sans);
+    color: var(--secondary-color);
+    font-size: 22px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 8px 12px;
+    line-height: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .client-dashboard__breadcrumb li:hover {
+    color: var(--primary-color);
+  }
+  
+  .client-dashboard__breadcrumb li.active {
+    font-weight: bold;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+  }
+  
