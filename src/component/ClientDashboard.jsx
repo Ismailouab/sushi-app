@@ -1,84 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from './Header';
-import { useAuth } from '../context/AuthContext';
 import { useFood } from "../context/FoodContext";
-import axios from 'axios';
+import { useOrder } from "../context/OrderContext";
+import { useAuth } from "../context/AuthContext";
 import '../css/ClientDashboard.css';
 import Subscription from './Subscription';
 
+
 function ClientDashboard({ onShowInfoClick }) {
-  const { user, token } = useAuth();
+  const { user} = useAuth()
   const { groupedFoods, loading } = useFood();
-  const [selectedSection, setSelectedSection] = useState("foods");
-  const [order, setOrder] = useState([]);
-  const [orderId, setOrderId] = useState(null);
-
-  const handleAddFood = (foodName, foodPrice, foodImage) => {
-    setOrder((prevOrder) => {
-      const existingItem = prevOrder.find(item => item.food_name === foodName);
-      if (existingItem) {
-        return prevOrder.map(item =>
-          item.food_name === foodName ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prevOrder, { food_name: foodName, quantity: 1, price: foodPrice, image: foodImage }];
-      }
-    });
-  };
-
-  const updateQuantity = (foodName, amount) => {
-    setOrder((prevOrder) => {
-      return prevOrder
-        .map(item => 
-          item.food_name === foodName 
-          ? { ...item, quantity: item.quantity + amount } 
-          : item
-        )
-        .filter(item => item.quantity > 0); // Remove item if quantity is 0
-    });
-  };
-
-  const handleValidateOrder = async () => {
-    if (order.length === 0) {
-      alert("Your order is empty!");
-      return;
-    }
+  const { 
+    order, 
+    selectedSection, 
+    setSelectedSection,
+    handleAddFood, 
+    updateQuantity, 
+    handleValidateOrder, 
+    handleCancelOrder, 
+    handleProceedToPayment, 
+    handleValidatePayment 
+  } = useOrder();
   
-    const orderData = { foods: order, status: "pending" };
-  
-    try {
-      const response = await axios.post(`http://localhost:8000/api/users/${user.id}/orders`, orderData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setOrderId(response.data.id);
-      alert("✅ Order placed successfully!");
-      setSelectedSection("yourOrder"); 
-    } catch (error) {
-      console.error("❌ Error placing order:", error);
-      alert("Failed to place order. Please try again.");
-    }
-  };
-
-  const handleCancelOrder = async () => {
-    if (orderId === null) {
-      alert("No order to cancel!");
-      return;
-    }
-
-    try {
-      await axios.delete(`http://localhost:8000/api/users/${user.id}/orders/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setOrder([]);
-      setOrderId(null);
-      setSelectedSection("foods");
-      alert("✅ Order canceled!");
-    } catch (error) {
-      console.error("❌ Error canceling order:", error);
-      alert("Failed to cancel order. Please try again.");
-    }
-  };
 
   return (
     <div>
@@ -108,14 +51,23 @@ function ClientDashboard({ onShowInfoClick }) {
 
       {selectedSection === "foods" && (
         <div className="foods-section">
-          <h3>All Foods</h3>
-          <p>You have selected {order.reduce((total, item) => total + item.quantity, 0)} food items</p>
-          <button className="manage-food__button" onClick={handleValidateOrder} data-aos="fade-right">
-            Validate Order
-          </button>
+          <h3 className="manage-food__title" data-aos="fade-right">All Foods</h3>
+          <div className="foods-header"> 
+            <p className='item' data-aos="fade-left">
+              The number of food items selected:
+              <span>{order.reduce((total, item) => total + item.quantity, 0)} </span>
+            </p>
+            <button className="manage-food__button" onClick={handleValidateOrder} data-aos="fade-left">
+              Validate Order
+            </button>
+          </div>
 
           {loading ? (
-            <p>Loading...</p>
+            <div className="loading">
+              <img src="/assets/infinite-spinner.svg" alt="loading" />
+              <p>Loading...</p>
+              </div>
+            
           ) : (
             Object.entries(groupedFoods).map(([category, foods]) => (
               <div key={category} className="food-category">
@@ -125,7 +77,9 @@ function ClientDashboard({ onShowInfoClick }) {
                 <div className="list" data-aos="fade-up">
                   {foods.map((food) => (
                     <div key={food.id} className="card" onClick={() => handleAddFood(food.name, food.price, food.image)}>
-                      <img src={food.image.startsWith("http") ? food.image : `/${food.image.replace("public/", "")}`} alt={food.name} />
+                      <img 
+                      src={food.image.startsWith("http") ? food.image : `/${food.image.replace("public/", "")}`} 
+                      alt={food.name} />
                       <h4 className="popular-foods__card-title">{food.name}</h4>
                       <div className="popular-foods__card-details flex-between">
                         <div className="popular-foods__card-rating">
@@ -145,45 +99,80 @@ function ClientDashboard({ onShowInfoClick }) {
 
       {selectedSection === "yourOrder" && (
         <div className="your-order-section">
-          <h3>Your Order</h3>
+          <h3 className="manage-food__title" data-aos="fade-right">Your Order</h3>
           {order.length === 0 ? (
+            <div className="loading" data-aos="fade-up">
+            <img src="/assets/infinite-spinner.svg" alt="loading" />
             <p>No items in your order.</p>
+            </div>
           ) : (
             <div>
-              <ul className="order-list">
+              <ul className="order-list" data-aos="fade-up">
                 {order.map((item, index) => (
-                  <li key={index} className="order-item">
-                    <div className="order-details">
-                      <img src={item.image.startsWith("http") ? item.image : `/${item.image.replace("public/", "")}`} alt={item.food_name} className="food-image" />
-                      <span>{item.food_name} - {item.quantity} x ${item.price}</span>
-                      <div className="quantity-controls">
-                        <button onClick={() => updateQuantity(item.food_name, 1)}>+</button>
-                        <button onClick={() => updateQuantity(item.food_name, -1)}>-</button>
-                      </div>
+                  <li key={index} className="order-item" data-aos="fade-right">
+                    <img src={item.image.startsWith("http") ? item.image : `/${item.image.replace("public/", "")}`} alt={item.food_name} />
+                    <span>{item.food_name} - {item.quantity} x ${item.price}</span>
+                    <div className="quantity-controls" data-aos="fade-left">
+                      <button onClick={() => updateQuantity(item.food_name, 1)}>+</button>
+                      <button onClick={() => updateQuantity(item.food_name, -1)}>-</button>
                     </div>
                   </li>
                 ))}
               </ul>
 
-              <div className="total-price">
+              <div className="total-price" data-aos="fade-up">
                 <p>Total Price: ${order.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</p>
               </div>
 
-              <div className="order-buttons">
-                <button className="payer-button" onClick={() => setSelectedSection("payment")}>Payer</button>
-                <button className="cancel-button" onClick={handleCancelOrder}>Cancel</button>
+              <div className="order-buttons" data-aos="fade-up">
+                <button className="manage-food__button" onClick={handleProceedToPayment}>Payer</button>
+                <button className="manage-food__button" onClick={handleCancelOrder}>Cancel</button>
               </div>
             </div>
           )}
         </div>
       )}
 
-      {selectedSection === "payment" && (
-        <div className="payment-section">
-          <h3>Payment</h3>
-          <p>Coming soon...</p>
+{selectedSection === "payment" && (
+  <div className="payment-section">
+    <h3 className="manage-food__title" data-aos="fade-right">Payment</h3>
+
+    {order.length === 0 ? (
+      <div className="loading" data-aos="fade-up">
+        <img src="/assets/infinite-spinner.svg" alt="loading" />
+        <p>No items to pay for.</p>
+      </div>
+    ) : (
+      <div>
+        <ul className="order-list" data-aos="fade-up">
+          {order.map((item, index) => (
+            <li key={index} className="order-item" data-aos="fade-right">
+              <img
+                src={item.image.startsWith("http") ? item.image : `/${item.image.replace("public/", "")}`}
+                alt={item.food_name}
+              />
+              <span>
+                {item.food_name} - {item.quantity} x ${item.price}
+              </span>
+              <p className="item-total-price" data-aos="fade-left">
+                Total: ${(item.price * item.quantity).toFixed(2)}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <div className="total-price-final" data-aos="fade-up">
+          <p className='final-price'>Total Price: ${order.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</p>
         </div>
-      )}
+
+        <div className="order-buttons" data-aos="fade-up">
+          <button className="manage-food__button" onClick={handleValidatePayment}>Validate</button>
+          <button className="manage-food__button" onClick={handleCancelOrder}>Cancel</button>
+        </div>
+      </div>
+    )}
+  </div>
+)}
       <Subscription />
     </div>
   );

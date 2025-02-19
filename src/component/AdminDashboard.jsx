@@ -87,7 +87,10 @@ function AdminDashboard({ onShowInfoClick }) {
 
           {/* Show loading indicator while data is being fetched */}
           {loading ? (
-            <p></p>
+            <div className="loading" data-aos="fade-up">
+            <img src="/assets/infinite-spinner.svg" alt="loading" />
+            <p>Loading...</p>
+            </div>
           ) : (
             Object.entries(groupedFoods).map(([category, foods]) => (
               <div key={category} className="food-category">
@@ -143,7 +146,10 @@ function AdminDashboard({ onShowInfoClick }) {
 
           {/* Show loading indicator for users */}
           {usersLoading ? (
-            <p>Loading users...</p>
+            <div className="loading" data-aos="fade-up">
+            <img src="/assets/infinite-spinner.svg" alt="loading" />
+            <p>Loading...</p>
+            </div>
           ) : (
             <div className="list"  data-aos="fade-up">
               {users.map((user) => (

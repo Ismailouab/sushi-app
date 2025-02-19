@@ -3,6 +3,7 @@ import { Route, Routes ,} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { FoodProvider } from "./context/FoodContext";
 import { UserProvider } from './context/UserContext';
+import { OrderProvider } from "./context/OrderContext";
 import Sections from './component/Sections';
 import Order from './component/Order';
 import Login from './component/Login';
@@ -49,6 +50,7 @@ const App = () => {
     <AuthProvider>
       <UserProvider>
         <FoodProvider>
+        <OrderProvider>
           
             {/* Render the Login modal if showLogin is true */}
             {showLogin && <Login onClose={closeLoginModal} />}
@@ -68,9 +70,9 @@ const App = () => {
                 <Route path="/client/dashboard" element={<ClientDashboard  onShowInfoClick={toggleInfoModal}/>} />
               </Routes>
               <Footer onLoginClick={toggleLoginModal} onShowInfoClick={toggleInfoModal} />
-          
+        </OrderProvider>
         </FoodProvider>
-        </UserProvider>
+      </UserProvider>
     </AuthProvider>
     </>
   );

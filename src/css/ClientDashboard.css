@@ -32,3 +32,144 @@
     height: 24px;
     object-fit: contain;
 }
+.foods-section {
+    display: flex;
+    flex-direction: column;
+}
+  
+.foods-header {
+    display: flex;
+    flex-direction: column; /* Stack p and button vertically */
+    align-items: flex-end; /* Keep everything left-aligned */
+    gap: 10px; /* Space between p and button */
+}
+.manage-food__button {
+    align-self: flex-end; /* Ensures button is left-aligned */
+    align-items: center;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+.item {
+    font-family: var(--plus-jakarta-sans);
+    font-size: 18px;
+    font-weight: 600;
+}
+  
+.item span {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: bold;
+    padding: 4px 4px;
+    border-radius: 8px;
+    
+}
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Takes the full viewport height */
+    background-color: var(--color-creamson);
+    color: var(--secondary-color);
+    font-family: var(--plus-jakarta-sans);
+  }
+  
+  .loading img {
+    width: 30%; /* Adjust the spinner size */
+    height: 30%;
+    animation: spin 1s linear infinite; /* Add spinning animation */
+  }
+  
+  .loading p {
+    margin-top: 40px;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--primary-color);
+    opacity: 0.8;
+  }
+  
+  /* Keyframe animation for the spinning effect */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .order-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  
+  .order-item img {
+    width: 100px;
+    object-fit: cover;
+    margin-right: 16px;
+  }
+  
+  .order-item span  {
+    flex-grow: 1;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-left: 20px;
+  }
+  .item-total-price{
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--secondary-color);
+  }
+  .quantity-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .quantity-controls button {
+    padding: 5px 10px;
+    font-size: 25px;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .quantity-controls button:hover {
+    background-color: var(--color-white);
+    color: var(--primary-color);
+  }
+  
+  .total-price {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 16px;
+  }
+  .order-buttons {
+    display: flex;
+    gap: 16px; /* Adds space between the buttons */
+  }
+  .order-buttons .manage-food__button {
+    margin: 10px 0;
+    gap: 10px;
+  }
+.total-price-final{
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end; 
+    gap: 10px; 
+}
+  
+  
